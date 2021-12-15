@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2009-2021 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.voyager.kylin.DeviceMapper">
+    <parameterMap id="deviceParameter" type="com.voyager.kylin.DeviceQueryModel">
+        <parameter property="dt" javaType="string" jdbcType="VARCHAR" />
+        <parameter property="province" javaType="string" jdbcType="VARCHAR" />
+    </parameterMap>
+    <resultMap id="deviceResult" type="com.voyager.kylin.DeviceResultModel">
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="nums" property="nums" jdbcType="INTEGER"/>
+        <result column="perc" property="perc" jdbcType="FLOAT"/>
+        <result column="inc_per" property="inc_per" jdbcType="FLOAT"/>
+        <result column="cur_per" property="cur_per" jdbcType="FLOAT"/>
+    </resultMap>
+
+    <select id="deviceSending" parameterMap="deviceParameter"
+            resultMap="deviceResult">
+        with regions as (
+            select
+                ot.province,
+                ot.total_nums
+            from
+                (
+                    select
+                        tmp.province,
+                        tmp.total_nums,
+                        rank() over(order by tmp.dt desc) as rn
+                    from
+                        (
+                            select
+                                substring(zt.dt,1,7) as dt, zt.province,
+                                sum(all_region_count) as total_nums
+                            from
+                                jtzt_dw.order_dict_dw as zt
+                            where
+                                zt.dt > timestampadd(month, -6, date '${dt}')
+                              and zt.province in (#{province})
+                            group by
+                                substring(zt.dt,1,7), zt.province
+                        ) as tmp
+                ) as ot
+            where
+                ot.rn = 1
+        )
+        select
+            rg.province as name,
+            sum(rg.total_nums) as nums
+        from
+            regions as rg
+        group by
+            rg.province
+        order by
+            nums desc
+    </select>
+
+</mapper>
