@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="hadoop001">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$/kylin-connector" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="slave001">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$/kylin-connector" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="slave002">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$/kylin-connector" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="slave003">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$/kylin-connector" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="slave004">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$/kylin-connector" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="slave005">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$/kylin-connector" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
