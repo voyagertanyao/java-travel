@@ -2,11 +2,11 @@ package com.voyager.kylin;
 
 public class DeviceQueryModel {
     private String dt;
-    private String province;
+//    private List<String> province;
 
-    public DeviceQueryModel(String dt, String province) {
+    public DeviceQueryModel(String dt) {
         this.dt = dt;
-        this.province = province;
+//        this.province = province;
     }
 
     public String getDt() {
@@ -17,11 +17,11 @@ public class DeviceQueryModel {
         this.dt = dt;
     }
 
-    public String getProvince() {
-        return province;
-    }
+//    public List<String> getProvince() {
+//        return province;
+//    }
 
-    public void setProvince(String province) {
-        this.province = province;
-    }
+//    public void setProvince(List<String> province) {
+//        this.province = province;
+//    }
 }

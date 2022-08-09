@@ -7,7 +7,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 public class KylinDruidQuery {
     public static void main(String[] args) throws IOException {
@@ -16,13 +15,19 @@ public class KylinDruidQuery {
 
         SqlSession sqlSession = build.openSession();
         DeviceMapper mapper = sqlSession.getMapper(DeviceMapper.class);
-        List<DeviceResultModel> deviceResultModels = mapper.deviceSending(new DeviceQueryModel("2021-11-30", "重庆市"));
-        for (DeviceResultModel deviceResultModel : deviceResultModels) {
-            System.out.println(deviceResultModel);
+        mapper.deviceSending(new DeviceQueryModel("2021-12-20"));
+        for(int i =0 ; i< 10; i++) {
+            new Thread(()-> {
+                mapper.deviceSending(new DeviceQueryModel("2021-12-20"));
+            }).start();
+            System.out.println(i);
         }
-        List<DeviceResultModel> deviceResultModelss = mapper.deviceSending(new DeviceQueryModel("2021-11-29", "四川省"));
-        for (DeviceResultModel deviceResultModel : deviceResultModelss) {
-            System.out.println(deviceResultModel);
-        }
+
+//        List<DeviceResultModel> deviceResultModels1 = mapper.deviceSending(new DeviceQueryModel("2021-12-20"));
+//        List<DeviceResultModel> deviceResultModels2 = mapper.deviceSending(new DeviceQueryModel("2021-12-20"));
+//        for (DeviceResultModel deviceResultModel : deviceResultModels) {
+//            System.out.println(deviceResultModel);
+//        }
+
     }
 }

@@ -11,8 +11,16 @@
     <modules>
         <module>design-pattern</module>
         <module>kylin-connector</module>
+        <module>antlr4</module>
+        <module>netty</module>
+        <module>core</module>
+        <module>sql</module>
     </modules>
 
     <name>java-travel</name>
-
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
 </project>

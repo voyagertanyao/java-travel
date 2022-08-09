@@ -23,7 +23,7 @@
 <mapper namespace="com.voyager.kylin.DeviceMapper">
     <parameterMap id="deviceParameter" type="com.voyager.kylin.DeviceQueryModel">
         <parameter property="dt" javaType="string" jdbcType="VARCHAR" />
-        <parameter property="province" javaType="string" jdbcType="VARCHAR" />
+<!--        <parameter property="province" javaType="string" jdbcType="VARCHAR" />-->
     </parameterMap>
     <resultMap id="deviceResult" type="com.voyager.kylin.DeviceResultModel">
         <result column="name" property="name" jdbcType="VARCHAR" />
@@ -35,42 +35,29 @@
 
     <select id="deviceSending" parameterMap="deviceParameter"
             resultMap="deviceResult">
-        with regions as (
+        with linemap as (
             select
-                ot.province,
-                ot.total_nums
+                substring(df.dt,1,7) as name,
+                (case when sum(month_nums) is null then 0 else sum(month_nums) end) as nums
             from
-                (
-                    select
-                        tmp.province,
-                        tmp.total_nums,
-                        rank() over(order by tmp.dt desc) as rn
-                    from
-                        (
-                            select
-                                substring(zt.dt,1,7) as dt, zt.province,
-                                sum(all_region_count) as total_nums
-                            from
-                                jtzt_dw.order_dict_dw as zt
-                            where
-                                zt.dt > timestampadd(month, -6, date '${dt}')
-                              and zt.province in (#{province})
-                            group by
-                                substring(zt.dt,1,7), zt.province
-                        ) as tmp
-                ) as ot
+                kylin_qlyom_facts.device_facts_month as df
             where
-                ot.rn = 1
+                df.dt <![CDATA[ < ]]> #{dt}
+            group by
+                substring(df.dt,1,7)
+            order by
+                name desc
+            limit
+                12
         )
         select
-            rg.province as name,
-            sum(rg.total_nums) as nums
+            lm.name as name,
+            lm.nums as nums
         from
-            regions as rg
-        group by
-            rg.province
+            linemap as lm
         order by
-            nums desc
+            lm.name asc
+
     </select>
 
 </mapper>
