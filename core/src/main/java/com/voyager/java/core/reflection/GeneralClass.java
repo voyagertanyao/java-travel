@@ -1,6 +1,7 @@
 package com.voyager.java.core.reflection;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.stream.Stream;
 
 public class GeneralClass {
     public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -13,6 +14,19 @@ public class GeneralClass {
         Object o = aClass.getConstructor(int.class).newInstance(15);
         Integer integer = o instanceof Integer ? ((Integer) o) : null;
         System.out.println(o);
+
+        // 几乎不使用这种转型方式
+        Integer.class.cast(o);
+
+
+        // error
+        Sider sider = (Sider) o;
+
+        // 替换掉 instanceof
+        Integer.class.isInstance(o);
+        // instanceof需要在右边 写出类对象字面量，难以枚举
+        Stream.of(Integer.class, Double.class)
+                .filter(Class::isInterface);
     }
 
     static <T> T create(Class<T> clazz) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {

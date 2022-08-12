@@ -7,13 +7,21 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="design-pattern" />
+        <module name="core" />
+        <module name="antlr4" />
         <module name="kylin-connector" />
+        <module name="netty" />
+        <module name="sql" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="8">
-      <module name="design-pattern" target="8" />
-      <module name="java-travel" target="8" />
-      <module name="kylin-connector" target="8" />
+    <bytecodeTargetLevel target="17">
+      <module name="antlr4" target="11" />
+      <module name="core" target="11" />
+      <module name="design-pattern" target="11" />
+      <module name="java-travel" target="11" />
+      <module name="kylin-connector" target="11" />
+      <module name="netty" target="11" />
+      <module name="sql" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
